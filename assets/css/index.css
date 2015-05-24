@@ -1,0 +1,9 @@
+body {
+  background-image: url(/background.jpg);
+  background-size: cover;
+}
+
+.opis {
+  background: yellow;
+  text-align: center;
+}

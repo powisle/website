@@ -21,7 +21,7 @@ module.exports = new View (articles) ->
       @link rel: "stylesheet", href: "css/index.css"
       @title "Projekt Powiśle"
     @body =>
-      @div class: 'container', =>
+      @div class: 'container', id: "body", =>
         @div class: "row", =>
           @div class: "col s12 title", =>
             @div class: "card-panel light-green", id: "project", "PROJEKT POWISLE"
@@ -30,7 +30,7 @@ module.exports = new View (articles) ->
           @div class: "col s12 m6 l8 calendar", =>
             @div class: "card-panel light-green", =>
               @h5 class: "white-text", =>
-                @span "KALENDARZ WYDARZEŃ"
+                @span "KALENDARZ"
               @ul class:"collection", =>
                 @a href:"#{}", class: "collection-item", =>
                   @text "BAZAR ROWEROWY"
@@ -42,18 +42,31 @@ module.exports = new View (articles) ->
                   @text "REKORD GUINESA W KLASKANIU USZAMI"
                   @span class: "badge", "50"
 
-
-                # @li =>
-                #   @h5 class:"title-name", "NAZWA WYDARZENIA"
-                #   @span "data"
-
           @div class: "col s12 m6 l4 app", =>
-            @div class: "card-panel light-green", =>
+            @div class: "card-panel light-green center-align", =>
               @h5 class: "white-text", =>
                 @span "GLOSUJ!"
-              @ul =>
-                @li =>
-                  @h6 class: "title-name", "NAZWA WYDARZENIA"
+
+      #           <ul class="collection">
+      # <li class="collection-item">Alvin</li>
+      # <li class="collection-item">Alvin</li>
+      # <li class="collection-item">Alvin</li>
+      # <li class="collection-item">Alvin</li>
+
+            @div class: "container", =>
+              @div class: "row", =>
+                @div class: "s12", =>
+                  @div id: "what", "CO: NAZWA WYDARZENIA", =>
+                    @p class: "opis", "Tutaj mamy piękny opis"
+
+
+
+              #
+              # @ul =>
+              #   @li =>
+              #     @h6 id: "title-name", "CO: NAZWA WYDARZENIA"
+              #     @h6 id: "who", "KTO: ORGANIZACJA"
+              #     @h6 id: "when", "KIEDY: 30 maja 2015"
 
 
     # include jQuery necessary for materialize
