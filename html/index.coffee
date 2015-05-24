@@ -21,29 +21,14 @@ module.exports = new View (articles) ->
       @link rel: "stylesheet", href: "css/index.css"
       @title "Projekt Powiśle"
     @body =>
-      @div class: 'container', id: "body", =>
-        @img id: "logo", src: "title.png"
-        @div class: "row", =>
-          # @div class: "col s12 title", =>
-          #   @div class: "card-panel light-green", id: "project", =>
-          #     # @img src: "title.png"
-          #     # @alt: "PROJEKT POWISLE"
-        @div class: "row", =>
 
-          @div class: "col s12 calendar", =>
-            @div class: "card-panel light-green", =>
-              @h5 class: "white-text", =>
-                @span "KALENDARZ 30 maja 2015"
-              @ul class:"collection", =>
-                for name, votes of {
-                  "Bazar rowerowy": 1234
-                  "Czytanie bajek": 423
-                  "REKORD GUINESA W KLASKANIU USZAMI": 2
-                }
-                  @a href:"/event.html", class: "collection-item", =>
-                    @text name
-                    @span class: "badge", votes
+      @div class: 'container', =>
+        @div class: "row", =>
+          @div class: "col s12 title", =>
+            @img src: "title.png", alt: "PROJEKT POWISLE", id: 'logo'
 
+        @div class: 'row', =>
+          @tag 'main', class: 'col s12', id: "main"
 
       @script src:"/jquery/dist/jquery.min.js"
       @script src:"/materialize/dist/js/materialize.min.js"
