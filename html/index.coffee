@@ -22,15 +22,18 @@ module.exports = new View (articles) ->
       @title "Projekt Powiśle"
     @body =>
       @div class: 'container', id: "body", =>
+        @img src: "title.png"
         @div class: "row", =>
-          @div class: "col s12 title", =>
-            @div class: "card-panel light-green", id: "project", "PROJEKT POWISLE"
+          # @div class: "col s12 title", =>
+          #   @div class: "card-panel light-green", id: "project", =>
+          #     # @img src: "title.png"
+          #     # @alt: "PROJEKT POWISLE"
         @div class: "row", =>
 
           @div class: "col s12 m6 l8 calendar", =>
             @div class: "card-panel light-green", =>
               @h5 class: "white-text", =>
-                @span "KALENDARZ"
+                @span "KALENDARZ 30 maja 2015"
               @ul class:"collection", =>
                 @a href:"#{}", class: "collection-item", =>
                   @text "BAZAR ROWEROWY"
@@ -46,19 +49,36 @@ module.exports = new View (articles) ->
             @div class: "card-panel light-green center-align", =>
               @h5 class: "white-text", =>
                 @span "GLOSUJ!"
+              @ul class: "collection", =>
+                @li class: "collection-item", =>
+                  @text "CO: NAZWA WYDARZENIA"
+                  @p class: "opis", "Tutaj mamy piękny opis"
+                @li class: "collection-item", =>
+                  @text "KTO: ORGANIZATOR"
+                @li class: "collection-item", =>
+                  @text "KIEDY: 30 maja 2015"
 
-      #           <ul class="collection">
-      # <li class="collection-item">Alvin</li>
-      # <li class="collection-item">Alvin</li>
-      # <li class="collection-item">Alvin</li>
-      # <li class="collection-item">Alvin</li>
 
-            @div class: "container", =>
-              @div class: "row", =>
-                @div class: "s12", =>
-                  @div id: "what", "CO: NAZWA WYDARZENIA", =>
-                    @p class: "opis", "Tutaj mamy piękny opis"
+#
+# <ul class="collection">
+#       <li class="collection-item">Alvin</li>
+#       <li class="collection-item">Alvin</li>
+#       <li class="collection-item">Alvin</li>
+#       <li class="collection-item">Alvin</li>
+#
+# @ul =>
+#   @li =>
+#     @h6 id: "title-name", "CO: NAZWA WYDARZENIA"
+#     @h6 id: "who", "KTO: ORGANIZATOR"
+#     @h6 id: "when", "KIEDY: 30 maja 2015"
 
+              # @div class: "container", =>
+              #   @div class: "row", =>
+              #     @div class: "s12", =>
+              #       @div id: "what", =>
+              #         @h5 "CO: NAZWA WYDARZENIA"
+              #         @p class: "opis", "Tutaj mamy piękny opis"
+              #
 
 
               #

@@ -1,9 +1,21 @@
+project.img {
+  max-height: 10px
+}
+
 body {
   background-image: url(/background.jpg);
   background-size: cover;
 }
 
-.opis {
+#what {
   background: yellow;
   text-align: center;
+}
+
+/*form*/
+
+.form {
+  background-color: white;
+  opacity: 50%;
+  margin-top: 40px;
 }
