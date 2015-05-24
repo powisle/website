@@ -30,19 +30,19 @@ module.exports = new View (articles) ->
           #     # @alt: "PROJEKT POWISLE"
         @div class: "row", =>
 
-          @div class: "col s12 calendar", =>
-            @div class: "card-panel light-green", =>
+          @div class: "col s12 app", =>
+            @div class: "card-panel light-green center-align", =>
               @h5 class: "white-text", =>
-                @span "KALENDARZ 30 maja 2015"
-              @ul class:"collection", =>
-                for name, votes of {
-                  "Bazar rowerowy": 1234
-                  "Czytanie bajek": 423
-                  "REKORD GUINESA W KLASKANIU USZAMI": 2
-                }
-                  @a href:"/event.html", class: "collection-item", =>
-                    @text name
-                    @span class: "badge", votes
+                @span "GLOSUJ!"
+              @ul class: "collection", =>
+                @li class: "collection-item", =>
+                  @text "CO: NAZWA WYDARZENIA"
+                  @p class: "opis", "Tutaj mamy piękny opis"
+                @li class: "collection-item", =>
+                  @text "KTO: ORGANIZATOR"
+                @li class: "collection-item", =>
+                  @text "KIEDY: 30 maja 2015"
+
 
 #
 # <ul class="collection">

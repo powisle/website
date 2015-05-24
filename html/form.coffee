@@ -22,7 +22,7 @@ module.exports = new View (articles) ->
       @title "Zgłaszanie projektu"
     @body =>
       @div class: "container form", =>
-        @img src: "title.png"
+        @img id: "logo", src: "title.png"
         @div class: "row", =>
           @form class: "col s12"
         @div class: "row", =>
