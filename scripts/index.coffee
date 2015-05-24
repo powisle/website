@@ -1,3 +1,5 @@
-backbone = require 'backbone'
+backbone  = require 'backbone'
+Router    = require './Router'
 
-console.dir backbone
+new Router
+do backbone.history.start
