@@ -1,43 +1,54 @@
-# Eats teacup-views and spits html
-#TODO: static files
-gulp       = require 'gulp'
-through    = require 'through2'
-rename     = require "gulp-rename"
-notify     = require 'gulp-notify'
-del        = require 'del'
-html_valid = require 'gulp-w3cjs'
-fs         = require 'fs'
-# defaults  = require './defaults'
+gulp        = require 'gulp'
+mocha       = require 'gulp-mocha'
+coffee      = require 'gulp-coffee'
+sourcemaps  = require 'gulp-sourcemaps'
+source      = require 'vinyl-source-stream'
+through     = require 'through2'
+del         = require 'del'
+buffer      = require 'vinyl-buffer'
+rename      = require "gulp-rename"
+webserver   = require 'gulp-webserver'
+bower       = require 'gulp-bower'
+notify      = require 'gulp-notify'
+browserify  = require 'browserify'
+coffeeify   = require 'coffeeify'
 
-options = # defaults 'teacup',
-  sources     : 'html/**/*'
-  destination : 'build/'
-  assets      : 'assets/**/*'
-  content     : 'content/**/*.md'
+{ fork }    = require 'child_process'
 
-module.exports = options
+gulp.task 'clean', (done) ->
+  del 'build/**/*', done
 
-articles = []
+gulp.task 'bower', ->
+  bower()
+    .pipe gulp.dest 'build/'
 
-gulp.task 'read-articles', ->
-  articles = []
+gulp.task 'assets', ->
   gulp
-    .src options.content
-    .pipe through.obj (file, enc, done) ->
-      content = fs.readFileSync file.path, enc
-      articles.push content
-      do done
+    .src 'assets/**/*'
+    .pipe gulp.dest 'build/'
 
-gulp.task 'teacup', ['read-articles'], ->
+gulp.task 'browserify', ->
+  b = browserify
+    entries: 'scripts/index.coffee'
+    debug: true
+    transform: coffeeify
+    extensions: ['.coffee']
+
+  return b.bundle()
+    .pipe source 'bundle.js'
+    .pipe buffer()
+    .pipe gulp.dest 'build/js'
+
+gulp.task 'teacup', ->
   gulp
-    .src options.sources, read: no
+    .src 'html/**/*.coffee', read: no
     .pipe through.obj (file, enc, done) ->
       # each file should be a module containing Teacup View instance
       # i.e. a function, that when called returns HTML string
       require.cache[file.path] = null # Clear cache, otherwise watch will always produce same output
       try
         view = require file.path
-        html = view articles
+        html = do view
       catch error
         console.error error
         return @emit 'error', error
@@ -48,31 +59,81 @@ gulp.task 'teacup', ['read-articles'], ->
     .on 'error', notify.onError (error) -> "Error: #{error.message}"
 
     .pipe rename extname: '.html'
-    # TODO: html validator works too slow or too often shows errors
-    # .pipe html_valid()
-    # TODO: waiting for reply on https://github.com/callumacrae/gulp-w3cjs/issues/10
-    #  .on 'error', notify.onError (error) -> "Error: #{error.message}"
-    .pipe gulp.dest options.destination
+    .pipe gulp.dest 'build/'
 
-gulp.task 'assets', ->
+gulp.task 'coffee', ->
+  development = process.env.NODE_ENV is 'development'
+
   gulp
-    .src options.assets
-    .pipe gulp.dest options.destination
+    .src 'src/**/*.coffee'
+    .pipe sourcemaps.init()
+    .pipe coffee()
+    # Only write source maps if env is development. Otherwise just pass thgrough.
+    .pipe if development then sourcemaps.write 'sources/' else through.obj()
+    .pipe gulp.dest 'build/'
 
-gulp.task 'build', ['teacup', 'assets']
+gulp.task 'test', ->
+  development = process.env.NODE_ENV is 'development'
 
-gulp.task 'watch', ['teacup', 'assets'], ->
-  gulp.watch [options.sources, options.content], ['teacup']
-  gulp.watch options.assets, ['assets']
-
-gulp.task 'clean', (done) ->
-  del options.destination, done
-
-webserver = require 'gulp-webserver',
-
-gulp.task 'serve', ['watch'], ->
   gulp
-    .src options.destination
+    .src 'test/*.coffee', read: no
+    .pipe mocha
+      reporter  : 'list'
+      compilers : 'coffee:coffee-script'
+    .once 'error', (error) ->
+      console.error 'Tests failed'
+      console.error error.stack
+      if development
+        return @emit 'end'
+      else
+        process.exit 1
+
+gulp.task 'build', gulp.series [
+  'clean'
+  'bower'
+  'assets'
+  'teacup'
+  'browserify'
+  'test'
+]
+
+server = null
+gulp.task 'start', (done) ->
+  server = fork __dirname
+  do done
+
+gulp.task 'stop', (done) ->
+  if not server then return do done
+
+  server.kill 'SIGINT'
+  do done
+
+gulp.task 'watch', (done) ->
+  gulp.watch [
+    'test/**/*'
+    'package.json'
+  ], gulp.series [
+    'test'
+  ]
+
+  gulp.watch ['src/**/*.coffee'], gulp.series [ 'coffee' ]
+  gulp.watch ['scripts/**/*'], gulp.series [ 'browserify' ]
+  gulp.watch ['html/**/*'], gulp.series [ 'teacup' ]
+  gulp.watch ['assets/**/*'], gulp.series [ 'assets' ]
+
+gulp.task 'serve', ->
+  gulp
+    .src 'build/'
     .pipe webserver
-      livereload: true,
-      open: true
+      livereload: yes
+      open      : yes
+      port      : 8080
+
+gulp.task 'develop', gulp.series [
+  (done) ->
+    process.env.NODE_ENV ?= 'development'
+    do done
+  'build'
+  'serve'
+  'watch'
+]
