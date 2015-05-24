@@ -26,14 +26,34 @@ module.exports = new View (articles) ->
           @div class: "col s12 title", =>
             @div class: "card-panel light-green", id: "project", "PROJEKT POWISLE"
         @div class: "row", =>
+
           @div class: "col s12 m6 l8 calendar", =>
-            # @div class: 'row', =>
-              # @div class: 'col s12 m12 l8', =>
-            @div class: "card-panel light-green", "HERE IS CALENDAR"
+            @div class: "card-panel light-green", =>
+              @h5 class: "white-text", =>
+                @span "KALENDARZ WYDARZEŃ"
+              @ul class:"collection", =>
+                @a href:"#{}", class: "collection-item", =>
+                  @text "BAZAR ROWEROWY"
+                  @span class: "badge", "1 234"
+                @a href:"#{}", class: "collection-item", =>
+                  @text "CZYTANIE BAJEK"
+                  @span class: "badge", "500"
+                @a href:"#{}", class: "collection-item", =>
+                  @text "REKORD GUINESA W KLASKANIU USZAMI"
+                  @span class: "badge", "50"
+
+
+                # @li =>
+                #   @h5 class:"title-name", "NAZWA WYDARZENIA"
+                #   @span "data"
+
           @div class: "col s12 m6 l4 app", =>
-            @div class: "card-panel light-green", "HERE IS OUR APP"
-
-
+            @div class: "card-panel light-green", =>
+              @h5 class: "white-text", =>
+                @span "GLOSUJ!"
+              @ul =>
+                @li =>
+                  @h6 class: "title-name", "NAZWA WYDARZENIA"
 
 
     # include jQuery necessary for materialize
