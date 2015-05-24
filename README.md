@@ -1,5 +1,5 @@
-Personal website about programming and design.
-==============================================
+Website for Project Powiśle
+===========================
 
 How to start hacking on this project
 ------------------------------------
@@ -30,7 +30,7 @@ This instruction assumes that you use some Linux system. Setting it up on Mac OS
 
       ```
       nvm alias default iojs
-      ```     
+      ```
 
   3.  Inside repository directory install all dependencies listed in [package.json](./package.json) using
 
@@ -44,16 +44,16 @@ This instruction assumes that you use some Linux system. Setting it up on Mac OS
 
   4.  Run:
 
-  ```
-  node_modules/.bin/gulp serve
-  ```
+      ```
+      npm develop
+      ```
 
       This will:
 
-  * Compile your code into `build/` directory
-  * Start watching for changes and rebuild when necessary
-  * Start a local web server on port 8000
-  * Open your web browser and point it to this server
+      * Compile your code into `build/` directory
+      * Start watching for changes and rebuild when necessary
+      * Start a local web server on port 8080
+      * Open your web browser and point it to this server
 
   5.  You are ready! Now just make changes to the code and in few seconds they should be reflected in the browser.
 
