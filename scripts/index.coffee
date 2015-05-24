@@ -1,1 +1,3 @@
-console.log 'Hello, browser!'
+backbone = require 'backbone'
+
+console.dir backbone

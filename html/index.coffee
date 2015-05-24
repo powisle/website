@@ -44,36 +44,7 @@ module.exports = new View (articles) ->
                     @text name
                     @span class: "badge", votes
 
-#
-# <ul class="collection">
-#       <li class="collection-item">Alvin</li>
-#       <li class="collection-item">Alvin</li>
-#       <li class="collection-item">Alvin</li>
-#       <li class="collection-item">Alvin</li>
-#
-# @ul =>
-#   @li =>
-#     @h6 id: "title-name", "CO: NAZWA WYDARZENIA"
-#     @h6 id: "who", "KTO: ORGANIZATOR"
-#     @h6 id: "when", "KIEDY: 30 maja 2015"
 
-              # @div class: "container", =>
-              #   @div class: "row", =>
-              #     @div class: "s12", =>
-              #       @div id: "what", =>
-              #         @h5 "CO: NAZWA WYDARZENIA"
-              #         @p class: "opis", "Tutaj mamy piękny opis"
-              #
-
-
-              #
-              # @ul =>
-              #   @li =>
-              #     @h6 id: "title-name", "CO: NAZWA WYDARZENIA"
-              #     @h6 id: "who", "KTO: ORGANIZACJA"
-              #     @h6 id: "when", "KIEDY: 30 maja 2015"
-
-
-    # include jQuery necessary for materialize
-      @script src:"https://code.jquery.com/jquery-2.1.1.min.js"
+      @script src:"/jquery/dist/jquery.min.js"
       @script src:"/materialize/dist/js/materialize.min.js"
+      @script src:"/js/bundle.js"
